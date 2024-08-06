@@ -19,9 +19,8 @@ public class Garcom extends Pessoa {
         addPerfil(Perfil.CLIENTE);
     }
 
-    public Garcom(Integer id, String nome, String cpf, String email, String senha, String telefone, List<Comanda> comandas) {
+    public Garcom(Integer id, String nome, String cpf, String email, String senha, String telefone) {
         super(id, nome, cpf, email, senha, telefone);
-        this.comandas = comandas;
         addPerfil(Perfil.CLIENTE);
     }
 }
