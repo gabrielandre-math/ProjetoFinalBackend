@@ -1,15 +1,16 @@
-package com.gabriel.smarorder;
+package com.gabriel.smarorder.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gabriel.smarorder.domain.enums.Perfil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
 public class Cliente extends Pessoa {
     private static final long serialVersionUID = 1L;
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Comanda> comandas = new ArrayList<Comanda>();
 
