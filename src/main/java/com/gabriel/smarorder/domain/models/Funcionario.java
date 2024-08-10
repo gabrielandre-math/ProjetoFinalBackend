@@ -22,7 +22,7 @@ public class Funcionario extends Pessoa {
 
     public Funcionario(Integer id, String nome, String cpf, String email, String senha, String telefone) {
         super(id, nome, cpf, email, senha, telefone);
-        addPerfil(Perfil.CLIENTE);
+        addPerfil(Perfil.FUNCIONARIO);
     }
 
     public List<Comanda> getComandas() {
