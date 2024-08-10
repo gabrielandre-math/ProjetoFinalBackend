@@ -1,5 +1,6 @@
 package com.gabriel.smarorder.resources;
 
+import com.gabriel.smarorder.domain.dtos.FuncionarioDTO;
 import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class FuncionarioResource {
     private FuncionarioService funcionarioService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Funcionario> findById(@PathVariable Integer id) {
+    public ResponseEntity<FuncionarioDTO> findById(@PathVariable Integer id) {
         Funcionario obj = funcionarioService.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
 }
