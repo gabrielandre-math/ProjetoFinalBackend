@@ -1,6 +1,7 @@
 package com.gabriel.smarorder.domain.enums;
 
 public enum Perfil {
+
     ADMIN(0, "ROLE_ADMIN"), CLIENTE(1, "ROLE_CLIENTE"), FUNCIONARIO(2, "ROLE_FUNCIONARIO");
 
     private Integer codigo;

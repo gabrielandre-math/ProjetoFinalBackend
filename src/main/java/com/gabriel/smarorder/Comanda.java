@@ -27,9 +27,6 @@ public class Comanda implements Serializable {
     private String titulo;
     private String observacoes;
 
-    @ManyToOne
-    @JoinColumn(name = "chefe_id")
-    private ChefeCozinha chefeCozinha;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -42,13 +39,13 @@ public class Comanda implements Serializable {
     public Comanda() {
         super();
     }
-    public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, ChefeCozinha chefeCozinha, Cliente cliente, Garcom garcom) {
+    public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Cliente cliente, Garcom garcom) {
         this.id = id;
         this.prioridade = prioridade;
         this.status = status;
         this.titulo = titulo;
         this.observacoes = observacoes;
-        this.chefeCozinha = chefeCozinha;
+
         this.cliente = cliente;
         this.garcom = garcom;
     }
@@ -115,14 +112,6 @@ public class Comanda implements Serializable {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
-    }
-
-    public ChefeCozinha getChefeCozinha() {
-        return chefeCozinha;
-    }
-
-    public void setChefeCozinha(ChefeCozinha chefeCozinha) {
-        this.chefeCozinha = chefeCozinha;
     }
 
     public Cliente getCliente() {
