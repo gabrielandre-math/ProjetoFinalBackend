@@ -1,4 +1,4 @@
-package com.gabriel.smarorder;
+package com.gabriel.smarorder.domain.models;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -33,13 +33,13 @@ public class Comanda implements Serializable {
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "garcom_id")
-    private Garcom garcom;
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
 
     public Comanda() {
         super();
     }
-    public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Cliente cliente, Garcom garcom) {
+    public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Cliente cliente, Funcionario funcionario) {
         this.id = id;
         this.prioridade = prioridade;
         this.status = status;
@@ -47,7 +47,7 @@ public class Comanda implements Serializable {
         this.observacoes = observacoes;
 
         this.cliente = cliente;
-        this.garcom = garcom;
+        this.funcionario = funcionario;
     }
 
     public byte[] getImagem() {
@@ -122,12 +122,12 @@ public class Comanda implements Serializable {
         this.cliente = cliente;
     }
 
-    public Garcom getGarcom() {
-        return garcom;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setGarcom(Garcom garcom) {
-        this.garcom = garcom;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
     @Override

@@ -1,19 +1,19 @@
 package com.gabriel.smarorder.services;
 
-import com.gabriel.smarorder.domain.models.Garcom;
-import com.gabriel.smarorder.repositories.GarcomRepository;
+import com.gabriel.smarorder.domain.models.Funcionario;
+import com.gabriel.smarorder.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class GarcomService {
+public class FuncionarioService {
     @Autowired
-    private GarcomRepository garcomRepository;
+    private FuncionarioRepository funcionarioRepository;
 
-    public Garcom findById(Integer id) {
-        Optional<Garcom> obj = garcomRepository.findById(id);
-        return (Garcom) ((Optional<?>) obj).orElse(null);
+    public Funcionario findById(Integer id) {
+        Optional<Funcionario> obj = funcionarioRepository.findById(id);
+        return (Funcionario) ((Optional<?>) obj).orElse(null);
     }
 }

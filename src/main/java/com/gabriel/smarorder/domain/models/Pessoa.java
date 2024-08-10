@@ -1,10 +1,9 @@
-package com.gabriel.smarorder;
+package com.gabriel.smarorder.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gabriel.smarorder.domain.enums.Perfil;
 import jakarta.persistence.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 

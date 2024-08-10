@@ -1,4 +1,4 @@
-package com.gabriel.smarorder;
+package com.gabriel.smarorder.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +17,12 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/funcionarios/**").permitAll() // Autoriza o acesso à URL /funcionarios/
                         .anyRequest().authenticated()
                 ).httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**") // Ignorar proteção CSRF para o console H2
+                        .ignoringRequestMatchers("/h2-console/**", "/funcionarios/**") // Ignorar proteção CSRF para /funcionarios/
                 )
                 .headers(headers -> headers
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)

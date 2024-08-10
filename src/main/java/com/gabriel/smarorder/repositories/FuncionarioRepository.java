@@ -1,8 +1,8 @@
 package com.gabriel.smarorder.repositories;
 
-import com.gabriel.smarorder.domain.models.Garcom;
+import com.gabriel.smarorder.domain.models.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GarcomRepository extends JpaRepository<Garcom, Integer> {
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
     
 }

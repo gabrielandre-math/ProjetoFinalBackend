@@ -1,8 +1,7 @@
 package com.gabriel.smarorder.resources;
 
-import com.gabriel.smarorder.domain.models.Garcom;
-import com.gabriel.smarorder.repositories.GarcomRepository;
-import com.gabriel.smarorder.services.GarcomService;
+import com.gabriel.smarorder.domain.models.Funcionario;
+import com.gabriel.smarorder.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value ="/garcons")
-public class GarcomResource {
+@RequestMapping(value ="/funcionarios")
+public class FuncionarioResource {
 
     @Autowired
-    private GarcomService garcomService;
+    private FuncionarioService funcionarioService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Garcom> findById(@PathVariable Integer id) {
-        Garcom obj = garcomService.findById(id);
+    public ResponseEntity<Funcionario> findById(@PathVariable Integer id) {
+        Funcionario obj = funcionarioService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 }

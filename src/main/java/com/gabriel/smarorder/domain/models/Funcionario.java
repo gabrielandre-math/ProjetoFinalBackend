@@ -8,19 +8,19 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-public class Garcom extends Pessoa {
+public class Funcionario extends Pessoa {
     private static final long serialVersionUID = 1L;
     @JsonIgnore
-    @OneToMany(mappedBy = "garcom")
+    @OneToMany(mappedBy = "funcionario")
     private List<Comanda> comandas = new ArrayList<Comanda>();
 
 
-    public Garcom() {
+    public Funcionario() {
         super();
         addPerfil(Perfil.CLIENTE);
     }
 
-    public Garcom(Integer id, String nome, String cpf, String email, String senha, String telefone) {
+    public Funcionario(Integer id, String nome, String cpf, String email, String senha, String telefone) {
         super(id, nome, cpf, email, senha, telefone);
         addPerfil(Perfil.CLIENTE);
     }
