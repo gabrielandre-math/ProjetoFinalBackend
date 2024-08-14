@@ -4,6 +4,8 @@ import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 import com.gabriel.smarorder.services.exceptions.ObjectNotFoundException;
 @Service
@@ -14,5 +16,9 @@ public class FuncionarioService {
     public Funcionario findById(Integer id) {
         Optional<Funcionario> obj = funcionarioRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado" + id));
+    }
+
+    public List<Funcionario> findAll() {
+        return funcionarioRepository.findAll();
     }
 }
