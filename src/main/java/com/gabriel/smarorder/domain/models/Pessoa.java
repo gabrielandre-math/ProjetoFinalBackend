@@ -3,6 +3,7 @@ package com.gabriel.smarorder.domain.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gabriel.smarorder.domain.enums.Perfil;
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public abstract class Pessoa implements Serializable {
     protected Integer id;
     protected String nome;
 
+    @CPF
     @Column(unique = true) //Coluna única no banco
     protected String cpf;
 

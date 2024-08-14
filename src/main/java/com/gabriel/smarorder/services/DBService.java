@@ -24,19 +24,20 @@ public class DBService {
     private ComandaRepository comandaRepository;
 
     public void instanciaDB() {
-        // Criando Clientes
-        Cliente cliente1 = new Cliente(null, "Pablo Andrade", "62653230268", "pablo@mail.com", "1234532", "99992999");
-        Cliente cliente2 = new Cliente(null, "Ana Beatriz", "32658741023", "ana@mail.com", "654321", "98887766");
-        Cliente cliente3 = new Cliente(null, "Carlos Souza", "78541236958", "carlos@mail.com", "789456", "97776655");
+
+        // Criando Clientes com CPFs válidos
+        Cliente cliente1 = new Cliente(null, "Pablo Andrade", "188.026.260-65", "pablo@mail.com", "1234532", "99992999");
+        Cliente cliente2 = new Cliente(null, "Ana Beatriz", "494.402.700-12", "ana@mail.com", "654321", "98887766");
+        Cliente cliente3 = new Cliente(null, "Carlos Souza", "651.883.530-32", "carlos@mail.com", "789456", "97776655");
 
         cliente1.addPerfil(Perfil.CLIENTE);
         cliente2.addPerfil(Perfil.CLIENTE);
         cliente3.addPerfil(Perfil.CLIENTE);
 
-        // Criando Funcionários
-        Funcionario funcionario1 = new Funcionario(null, "Adalmir Jr", "63653230258", "adalmir@mail.com", "1234532", "99992919");
-        Funcionario funcionario2 = new Funcionario(null, "Maria Silva", "12654789012", "maria@mail.com", "456789", "98888777");
-        Funcionario funcionario3 = new Funcionario(null, "João Mendes", "78945612378", "joao@mail.com", "123789", "96665544");
+        // Criando Funcionários com CPFs válidos
+        Funcionario funcionario1 = new Funcionario(null, "Adalmir Jr", "970.721.800-28", "adalmir@mail.com", "1234532", "99992919");
+        Funcionario funcionario2 = new Funcionario(null, "Maria Silva", "259.888.540-60", "maria@mail.com", "456789", "98888777");
+        Funcionario funcionario3 = new Funcionario(null, "João Mendes", "742.809.090-32", "joao@mail.com", "123789", "96665544");
 
         funcionario1.addPerfil(Perfil.FUNCIONARIO);
         funcionario2.addPerfil(Perfil.FUNCIONARIO);

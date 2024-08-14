@@ -5,6 +5,7 @@ import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.domain.models.Pessoa;
 import com.gabriel.smarorder.repositories.FuncionarioRepository;
 import com.gabriel.smarorder.repositories.PessoaRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.gabriel.smarorder.services.exceptions.ObjectNotFoundException;
 import com.gabriel.smarorder.services.exceptions.DataIntegrityViolationException;
@@ -36,6 +37,15 @@ public class FuncionarioService {
         Funcionario newObj = new Funcionario(objDTO);
         return funcionarioRepository.save(newObj);
     }
+    public Funcionario update(Integer id, @Valid FuncionarioDTO objDTO) {
+        objDTO.setId(id);
+        Funcionario oldObj = funcionarioRepository.findById(id).get();
+        ValidaPorCpfeEmail(objDTO);
+        oldObj = new Funcionario(objDTO);
+        return funcionarioRepository.save(oldObj);
+
+    }
+
     private void ValidaPorCpfeEmail(FuncionarioDTO funcionarioDTO) {
         Optional<Pessoa> obj = pessoaRepository.findByCpf(funcionarioDTO.getCpf());
         if (obj.isPresent() && !Objects.equals(obj.get().getId(), funcionarioDTO.getId())) {
@@ -47,4 +57,6 @@ public class FuncionarioService {
             throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
         }
     }
+
+
 }

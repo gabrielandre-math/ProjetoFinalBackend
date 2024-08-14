@@ -5,6 +5,7 @@ import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.services.FuncionarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
@@ -38,4 +39,10 @@ public class FuncionarioResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(null).build();
     }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<FuncionarioDTO> update(@PathVariable Integer id, @Valid @RequestBody FuncionarioDTO objDTO) {
+        Funcionario obj = funcionarioService.update(id, objDTO);
+        return ResponseEntity.ok().body(new FuncionarioDTO(obj));
+    }
+
 }
