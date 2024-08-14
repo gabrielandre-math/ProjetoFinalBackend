@@ -5,11 +5,11 @@ import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,5 +30,11 @@ public class FuncionarioResource {
         List<Funcionario> list = funcionarioService.findAll();
         List<FuncionarioDTO> listDTO = list.stream().map(FuncionarioDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
+    }
+    @PostMapping
+    public ResponseEntity<FuncionarioDTO> create(@RequestBody FuncionarioDTO objDTO) {
+        Funcionario newObj = funcionarioService.create(objDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(null).build();
     }
 }

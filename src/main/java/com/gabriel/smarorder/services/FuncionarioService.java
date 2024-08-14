@@ -1,5 +1,6 @@
 package com.gabriel.smarorder.services;
 
+import com.gabriel.smarorder.domain.dtos.FuncionarioDTO;
 import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,11 @@ public class FuncionarioService {
 
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
+    }
+
+    public Funcionario create(FuncionarioDTO objDTO) {
+        objDTO.setId(null);
+        Funcionario newObj = new Funcionario(objDTO);
+        return funcionarioRepository.save(newObj);
     }
 }

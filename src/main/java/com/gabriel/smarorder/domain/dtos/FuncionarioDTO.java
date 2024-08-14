@@ -30,6 +30,7 @@ public class FuncionarioDTO implements Serializable {
 
     public FuncionarioDTO() {
         super();
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {
