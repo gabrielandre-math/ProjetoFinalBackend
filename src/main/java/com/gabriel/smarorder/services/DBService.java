@@ -38,10 +38,12 @@ public class DBService {
         Funcionario funcionario1 = new Funcionario(null, "Adalmir Jr", "970.721.800-28", "adalmir@mail.com", "1234532", "99992919");
         Funcionario funcionario2 = new Funcionario(null, "Maria Silva", "259.888.540-60", "maria@mail.com", "456789", "98888777");
         Funcionario funcionario3 = new Funcionario(null, "João Mendes", "742.809.090-32", "joao@mail.com", "123789", "96665544");
+        Funcionario funcionario4 = new Funcionario(null, "Max Hargreeves", "580.144.330-41", "max@mail.com", "123789", "96665524");
 
         funcionario1.addPerfil(Perfil.FUNCIONARIO);
         funcionario2.addPerfil(Perfil.FUNCIONARIO);
         funcionario3.addPerfil(Perfil.FUNCIONARIO);
+        funcionario4.addPerfil(Perfil.FUNCIONARIO);
 
         // Criando Comandas
         Comanda comanda1 = new Comanda(null, Prioridade.MEDIA, Status.ANDAMENTO, "Comanda 01", "Nenhuma Observação", cliente1, funcionario1);
@@ -51,7 +53,7 @@ public class DBService {
         Comanda comanda5 = new Comanda(null, Prioridade.ALTA, Status.ENCERRADO, "Comanda 05", "Sem glúten", cliente2, funcionario1);
 
         // Salvar todas as entidades no repositório
-        funcionarioRepository.saveAll(Arrays.asList(funcionario1, funcionario2, funcionario3));
+        funcionarioRepository.saveAll(Arrays.asList(funcionario1, funcionario2, funcionario3, funcionario4));
         clienteRepository.saveAll(Arrays.asList(cliente1, cliente2, cliente3));
         comandaRepository.saveAll(Arrays.asList(comanda1, comanda2, comanda3, comanda4, comanda5));
     }

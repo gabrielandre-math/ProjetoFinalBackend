@@ -37,6 +37,7 @@ public class FuncionarioService {
         Funcionario newObj = new Funcionario(objDTO);
         return funcionarioRepository.save(newObj);
     }
+
     public Funcionario update(Integer id, @Valid FuncionarioDTO objDTO) {
         objDTO.setId(id);
         Funcionario oldObj = funcionarioRepository.findById(id).get();
@@ -44,6 +45,14 @@ public class FuncionarioService {
         oldObj = new Funcionario(objDTO);
         return funcionarioRepository.save(oldObj);
 
+    }
+
+    public void delete(Integer id) {
+        Funcionario obj = findById(id);
+        if (!obj.getComandas().isEmpty()) {
+            throw new DataIntegrityViolationException("O funcionário possui comanda em aberto e não pode ser deletado!");
+        }
+        funcionarioRepository.delete(obj);
     }
 
     private void ValidaPorCpfeEmail(FuncionarioDTO funcionarioDTO) {
@@ -57,6 +66,7 @@ public class FuncionarioService {
             throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
         }
     }
+
 
 
 }
