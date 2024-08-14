@@ -3,6 +3,7 @@ package com.gabriel.smarorder.domain.dtos;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gabriel.smarorder.domain.enums.Perfil;
 import com.gabriel.smarorder.domain.models.Funcionario;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,13 +15,19 @@ public class FuncionarioDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected Integer id;
+
+    @NotNull(message = "Campo NOME é requerido")
     protected String nome;
 
+    @NotNull(message = "Campo CPF é requerido")
     protected String cpf;
 
+    @NotNull(message = "Campo E-MAIL é requerido")
     protected String email;
 
     protected String telefone;
+
+    @NotNull(message = "Campo SENHA é requerido")
     protected String senha;
 
     protected Set<Integer> perfis = new HashSet<>();

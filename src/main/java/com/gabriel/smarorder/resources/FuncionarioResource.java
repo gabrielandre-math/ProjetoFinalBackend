@@ -3,6 +3,7 @@ package com.gabriel.smarorder.resources;
 import com.gabriel.smarorder.domain.dtos.FuncionarioDTO;
 import com.gabriel.smarorder.domain.models.Funcionario;
 import com.gabriel.smarorder.services.FuncionarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestBindingException;
@@ -32,7 +33,7 @@ public class FuncionarioResource {
         return ResponseEntity.ok().body(listDTO);
     }
     @PostMapping
-    public ResponseEntity<FuncionarioDTO> create(@RequestBody FuncionarioDTO objDTO) {
+    public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO objDTO) {
         Funcionario newObj = funcionarioService.create(objDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(null).build();
