@@ -1,5 +1,6 @@
 package com.gabriel.smarorder.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gabriel.smarorder.domain.models.Comanda;
+
 @Service
 public class ComandaService {
     @Autowired
@@ -35,6 +37,12 @@ public class ComandaService {
     public Comanda create(@Valid ComandaDTO comandaDTO) {
         return comandaRepository.save(newComanda(comandaDTO));
     }
+    public Comanda update(Integer id, ComandaDTO comandaDTO) {
+        comandaDTO.setId(id);
+        Comanda oldObj = findById(id);
+        oldObj = newComanda(comandaDTO);
+        return comandaRepository.save(oldObj);
+    }
     private Comanda newComanda(ComandaDTO obj) {
         Funcionario funcionario = funcionarioService.findById(obj.getFuncionario());
         Cliente cliente = clienteService.findById(obj.getCliente());
@@ -43,7 +51,9 @@ public class ComandaService {
         if(obj.getId() != null) {
             comanda.setId(obj.getId());
         }
-
+        if(obj.getStatus().equals(2)) {
+            comanda.setDataFechamento(LocalDate.now());
+        }
         comanda.setFuncionario(funcionario);
         comanda.setCliente(cliente);
         comanda.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));
@@ -52,5 +62,6 @@ public class ComandaService {
         comanda.setObservacoes(obj.getObservacoes());
         return comanda;
     }
+
 
 }

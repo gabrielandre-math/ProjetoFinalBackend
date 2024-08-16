@@ -5,6 +5,7 @@ import com.gabriel.smarorder.services.ComandaService;
 import com.gabriel.smarorder.domain.models.Comanda;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ComandaResource {
     @Autowired
     private ComandaService comandaService;
+    @Autowired
+    private ServerProperties serverProperties;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ComandaDTO> findById(@PathVariable Integer id) {
@@ -34,5 +37,10 @@ public class ComandaResource {
         Comanda obj = comandaService.create(comandaDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ComandaDTO> update(@PathVariable Integer id, @Valid @RequestBody ComandaDTO comandaDTO) {
+        Comanda newObj = comandaService.update(id, comandaDTO);
+        return ResponseEntity.ok().body(new ComandaDTO(newObj));
     }
 }
