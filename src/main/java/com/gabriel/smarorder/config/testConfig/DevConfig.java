@@ -1,4 +1,4 @@
-package com.gabriel.smarorder.config;
+package com.gabriel.smarorder.config.testConfig;
 
 import com.gabriel.smarorder.services.DBService;
 import org.springframework.beans.factory.annotation.Autowired;

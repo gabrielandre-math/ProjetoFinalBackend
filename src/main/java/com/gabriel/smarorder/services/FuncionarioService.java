@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.gabriel.smarorder.services.exceptions.ObjectNotFoundException;
 import com.gabriel.smarorder.services.exceptions.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public class FuncionarioService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     public Funcionario findById(Integer id) {
         Optional<Funcionario> obj = funcionarioRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado" + id));
@@ -33,6 +37,7 @@ public class FuncionarioService {
 
     public Funcionario create(FuncionarioDTO objDTO) {
         objDTO.setId(null);
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
         ValidaPorCpfeEmail(objDTO);
         Funcionario newObj = new Funcionario(objDTO);
         return funcionarioRepository.save(newObj);
