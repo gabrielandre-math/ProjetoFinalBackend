@@ -1,12 +1,15 @@
 package com.gabriel.smarorder.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gabriel.smarorder.domain.dtos.ClienteDTO;
 import com.gabriel.smarorder.domain.enums.Perfil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Entity
 public class Cliente extends Pessoa {
     private static final long serialVersionUID = 1L;
@@ -24,6 +27,17 @@ public class Cliente extends Pessoa {
         addPerfil(Perfil.CLIENTE);
     }
 
+    public Cliente(ClienteDTO obj) {
+        super();
+        this.id = obj.getId();
+        this.nome = obj.getNome();
+        this.cpf = obj.getCpf();
+        this.email = obj.getEmail();
+        this.telefone = obj.getTelefone();
+        this.senha = obj.getSenha();
+        this.perfis = obj.getPerfis().stream().map(Perfil::getCodigo).collect(Collectors.toSet());
+        this.dataCriacao = obj.getDataCriacao();
+    }
     public List<Comanda> getComandas() {
         return comandas;
     }

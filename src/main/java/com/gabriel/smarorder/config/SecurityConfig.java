@@ -18,11 +18,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/funcionarios/**").permitAll() // Autoriza o acesso à URL /funcionarios/
-                        .anyRequest().authenticated()
+                        .requestMatchers("/clientes/**").permitAll()
+                        .anyRequest().authenticated() // Autoriza o acesso à URL /funcionarios/
                 ).httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**", "/funcionarios/**") // Ignorar proteção CSRF para /funcionarios/
+                        .ignoringRequestMatchers("/h2-console/**", "/funcionarios/**", "/clientes/**") // Ignorar proteção CSRF para /funcionarios/
                 )
                 .headers(headers -> headers
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
