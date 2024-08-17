@@ -27,7 +27,6 @@ public class DBService {
     @Autowired
     private PasswordEncoder encoder;
 
-
     public void instanciaDB() {
 
         // Criando Clientes com CPFs válidos
