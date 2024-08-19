@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -20,26 +21,28 @@ public class ComandaResource {
     @Autowired
     private ComandaService comandaService;
 
+    @PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ComandaDTO> findById(@PathVariable Integer id) {
         Comanda obj = comandaService.findById(id);
         return ResponseEntity.ok().body(new ComandaDTO(obj));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
     @GetMapping
     public ResponseEntity<List<ComandaDTO>> findAll() {
         List<Comanda> list = comandaService.findAll();
         List<ComandaDTO> listDTO = list.stream().map(ComandaDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
     @PostMapping
     public ResponseEntity<ComandaDTO> create(@Valid @RequestBody ComandaDTO comandaDTO) {
         Comanda obj = comandaService.create(comandaDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ComandaDTO> update(@PathVariable Integer id, @Valid @RequestBody ComandaDTO comandaDTO) {
         Comanda newObj = comandaService.update(id, comandaDTO);

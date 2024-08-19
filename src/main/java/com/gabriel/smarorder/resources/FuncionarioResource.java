@@ -23,12 +23,13 @@ public class FuncionarioResource {
     @Autowired
     private FuncionarioService funcionarioService;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> findById(@PathVariable Integer id) {
         Funcionario obj = funcionarioService.findById(id);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<FuncionarioDTO>> findAll() {
         List<Funcionario> list = funcionarioService.findAll();
