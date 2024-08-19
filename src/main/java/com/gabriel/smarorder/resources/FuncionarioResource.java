@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,25 +28,32 @@ public class FuncionarioResource {
         Funcionario obj = funcionarioService.findById(id);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
+
     @GetMapping
     public ResponseEntity<List<FuncionarioDTO>> findAll() {
         List<Funcionario> list = funcionarioService.findAll();
         List<FuncionarioDTO> listDTO = list.stream().map(FuncionarioDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<FuncionarioDTO> create(@Valid @RequestBody FuncionarioDTO objDTO) {
         Funcionario newObj = funcionarioService.create(objDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
-        return ResponseEntity.created(null).build();
+        return ResponseEntity.created(uri).build();  // Corrigido para retornar a URI criada
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<FuncionarioDTO> update(@PathVariable Integer id, @Valid @RequestBody FuncionarioDTO objDTO) {
         Funcionario obj = funcionarioService.update(id, objDTO);
         return ResponseEntity.ok().body(new FuncionarioDTO(obj));
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<FuncionarioDTO> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         funcionarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
