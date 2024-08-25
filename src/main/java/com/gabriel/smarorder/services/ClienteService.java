@@ -39,19 +39,31 @@ public class ClienteService {
     public Cliente create(ClienteDTO objDTO) {
         objDTO.setId(null);
         objDTO.setSenha(encoder.encode(objDTO.getSenha()));
+
+        // Formatar o CPF antes de validar
+        String formattedCpf = formatCpf(objDTO.getCpf());
+        objDTO.setCpf(formattedCpf);
+
         ValidaPorCpfeEmail(objDTO);
         Cliente newObj = new Cliente(objDTO);
         return clienteRepository.save(newObj);
     }
 
+
+
     public Cliente update(Integer id, @Valid ClienteDTO objDTO) {
         objDTO.setId(id);
+
+        // Formatar o CPF antes de validar
+        String formattedCpf = formatCpf(objDTO.getCpf());
+        objDTO.setCpf(formattedCpf);
+
         Cliente oldObj = clienteRepository.findById(id).get();
         ValidaPorCpfeEmail(objDTO);
         oldObj = new Cliente(objDTO);
         return clienteRepository.save(oldObj);
-
     }
+
 
     public void delete(Integer id) {
         Cliente obj = findById(id);
@@ -72,7 +84,11 @@ public class ClienteService {
             throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
         }
     }
-
-
+    private String formatCpf(String cpf) {
+        if (cpf == null || cpf.isEmpty()) {
+            return null;
+        }
+        return cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+    }
 
 }
