@@ -15,6 +15,7 @@ public class ComandaDTO implements Serializable {
     private LocalDate dataAbertura = LocalDate.now();
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
+
     @NotNull(message = "O campo PRIORIDADE é requerido")
     private Integer prioridade;
     @NotNull(message = "O campo STATUS é requerido")
