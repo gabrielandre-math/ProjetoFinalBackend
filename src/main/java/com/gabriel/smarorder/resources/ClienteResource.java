@@ -33,7 +33,7 @@ public class ClienteResource {
         List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
     }
-    @PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
+
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody ClienteDTO objDTO) {
         Cliente newObj = clienteService.create(objDTO);
