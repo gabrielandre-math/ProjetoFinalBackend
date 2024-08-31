@@ -1,32 +1,38 @@
 package com.gabriel.smarorder.domain.models;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 import com.gabriel.smarorder.domain.enums.Prioridade;
 import com.gabriel.smarorder.domain.enums.Status;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Comanda implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Lob
     private byte[] imagem;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataAbertura = LocalDate.now();
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
 
     private Prioridade prioridade;
-
     private Status status;
     private String titulo;
     private String observacoes;
-
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -36,16 +42,19 @@ public class Comanda implements Serializable {
     @JoinColumn(name = "funcionario_id")
     private Funcionario funcionario;
 
+    @OneToMany(mappedBy = "comanda", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemComanda> itens = new ArrayList<>();
+
     public Comanda() {
         super();
     }
+
     public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Cliente cliente, Funcionario funcionario) {
         this.id = id;
         this.prioridade = prioridade;
         this.status = status;
         this.titulo = titulo;
         this.observacoes = observacoes;
-
         this.cliente = cliente;
         this.funcionario = funcionario;
     }
@@ -128,6 +137,20 @@ public class Comanda implements Serializable {
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    public List<ItemComanda> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemComanda> itens) {
+        this.itens = itens;
+    }
+
+    public BigDecimal calcularValorTotal() {
+        return itens.stream()
+                .map(ItemComanda::getPrecoTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
