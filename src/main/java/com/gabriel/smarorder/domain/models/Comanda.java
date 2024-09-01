@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gabriel.smarorder.domain.enums.Prioridade;
 import com.gabriel.smarorder.domain.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,10 +31,16 @@ public class Comanda implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
 
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataAtualizacao;
+
     private Prioridade prioridade;
     private Status status;
     private String titulo;
     private String observacoes;
+
+    @NotNull
+    private String mesa;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -49,7 +57,7 @@ public class Comanda implements Serializable {
         super();
     }
 
-    public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Cliente cliente, Funcionario funcionario) {
+    public Comanda(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Cliente cliente, Funcionario funcionario, String mesa) {
         this.id = id;
         this.prioridade = prioridade;
         this.status = status;
@@ -57,6 +65,8 @@ public class Comanda implements Serializable {
         this.observacoes = observacoes;
         this.cliente = cliente;
         this.funcionario = funcionario;
+        this.mesa = mesa;
+        this.dataAtualizacao = LocalDateTime.now();  // Define a data/hora da criação
     }
 
     public byte[] getImagem() {
@@ -91,6 +101,14 @@ public class Comanda implements Serializable {
         this.dataFechamento = dataFechamento;
     }
 
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
     public Prioridade getPrioridade() {
         return prioridade;
     }
@@ -121,6 +139,14 @@ public class Comanda implements Serializable {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public String getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(String mesa) {
+        this.mesa = mesa;
     }
 
     public Cliente getCliente() {

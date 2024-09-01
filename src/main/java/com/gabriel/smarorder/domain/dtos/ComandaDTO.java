@@ -9,29 +9,39 @@ import java.time.LocalDate;
 
 public class ComandaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
+
     private Integer id;
     private byte[] imagem;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataAbertura = LocalDate.now();
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFechamento;
 
     @NotNull(message = "O campo PRIORIDADE é requerido")
     private Integer prioridade;
+
     @NotNull(message = "O campo STATUS é requerido")
     private Integer status;
+
     @NotNull(message = "O campo TITULO é requerido")
     private String titulo;
+
     @NotNull(message = "O campo OBSERVAÇÕES é requerido")
     private String observacoes;
+
+    @NotNull(message = "O campo MESA é requerido")
+    private String mesa;
+
     @NotNull(message = "O campo CLIENTE é requerido")
     private Integer cliente;
+
     @NotNull(message = "O campo FUNCIONÁRIO é requerido")
     private Integer funcionario;
 
     private String nomeFuncionario;
     private String nomeCliente;
-
 
     public ComandaDTO() {
         super();
@@ -45,11 +55,14 @@ public class ComandaDTO implements Serializable {
         this.status = obj.getStatus().getCodigo();
         this.titulo = obj.getTitulo();
         this.observacoes = obj.getObservacoes();
+        this.mesa = obj.getMesa();
         this.cliente = obj.getCliente().getId();
         this.funcionario = obj.getFuncionario().getId();
         this.nomeFuncionario = obj.getFuncionario().getNome();
-        this.nomeCliente = obj.getCliente().getNome();
+        this.nomeCliente = obj.getCliente().getNome();  // Aqui o nome do cliente é atribuído
     }
+
+    // Getters e Setters
 
     public Integer getId() {
         return id;
@@ -113,6 +126,14 @@ public class ComandaDTO implements Serializable {
 
     public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
+    }
+
+    public String getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(String mesa) {
+        this.mesa = mesa;
     }
 
     public Integer getCliente() {

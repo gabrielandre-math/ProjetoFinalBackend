@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
                         .requestMatchers("/api/analytics/**").permitAll()  // Permite acesso público à rota /api/analytics
                         .requestMatchers("/api/check-email").permitAll()
+                        .requestMatchers("/comandas/**").hasAnyRole("ADMIN", "FUNCIONARIO")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

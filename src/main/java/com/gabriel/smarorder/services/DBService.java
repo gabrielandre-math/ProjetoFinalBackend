@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.Arrays;
 
 @Service
@@ -77,38 +76,47 @@ public class DBService {
 
         funcionarioRepository.save(funcionarioAdm);
 
-        // Criando comandas e adicionando itens a elas, com datas variadas
-        Comanda comanda1 = new Comanda(null, Prioridade.MEDIA, Status.ANDAMENTO, "Comanda 01", "Nenhuma Observação", cliente1, funcionario1);
+        // Criando comandas e adicionando itens a elas, com datas variadas e mesas
+        Comanda comanda1 = new Comanda(null, Prioridade.MEDIA, Status.ANDAMENTO, "Comanda 01", "Nenhuma Observação", cliente1, funcionario1, "Mesa 01");
         comanda1.setDataAbertura(LocalDate.now().minusMonths(3));  // Comanda de 3 meses atrás
         comanda1.getItens().add(new ItemComanda(null, comanda1, produto1, 2)); // 2 Hamburgueres
         comanda1.getItens().add(new ItemComanda(null, comanda1, produto3, 3)); // 3 Pasteis
 
-        Comanda comanda2 = new Comanda(null, Prioridade.ALTA, Status.ENCERRADO, "Comanda 02", "Adicionar pouco sal", cliente2, funcionario2);
+        Comanda comanda2 = new Comanda(null, Prioridade.ALTA, Status.ENCERRADO, "Comanda 02", "Adicionar pouco sal", cliente2, funcionario2, "Mesa 02");
         comanda2.setDataAbertura(LocalDate.now().minusMonths(2));  // Comanda de 2 meses atrás
         comanda2.getItens().add(new ItemComanda(null, comanda2, produto2, 1)); // 1 Pizza
 
-        Comanda comanda3 = new Comanda(null, Prioridade.BAIXA, Status.ANDAMENTO, "Comanda 03", "Sem açúcar", cliente3, funcionario3);
+        Comanda comanda3 = new Comanda(null, Prioridade.BAIXA, Status.ANDAMENTO, "Comanda 03", "Sem açúcar", cliente3, funcionario3, "Mesa 03");
         comanda3.setDataAbertura(LocalDate.now().minusMonths(1));  // Comanda de 1 mês atrás
         comanda3.getItens().add(new ItemComanda(null, comanda3, produto4, 2)); // 2 Sucos
 
-        Comanda comanda4 = new Comanda(null, Prioridade.MEDIA, Status.ENCERRADO, "Comanda 04", "Sem cebola", cliente4, funcionario1);
+        Comanda comanda4 = new Comanda(null, Prioridade.MEDIA, Status.ENCERRADO, "Comanda 04", "Sem cebola", cliente4, funcionario1, "Mesa 04");
         comanda4.setDataAbertura(LocalDate.now());  // Comanda deste mês
         comanda4.getItens().add(new ItemComanda(null, comanda4, produto1, 1)); // 1 Hamburguer
         comanda4.getItens().add(new ItemComanda(null, comanda4, produto5, 2)); // 2 Cervejas
 
-        Comanda comanda5 = new Comanda(null, Prioridade.ALTA, Status.ANDAMENTO, "Comanda 05", "Pouco sal", cliente1, funcionario2);
+        Comanda comanda5 = new Comanda(null, Prioridade.ALTA, Status.ANDAMENTO, "Comanda 05", "Pouco sal", cliente1, funcionario2, "Mesa 05");
         comanda5.setDataAbertura(LocalDate.now().minusMonths(6));  // Comanda de 6 meses atrás
         comanda5.getItens().add(new ItemComanda(null, comanda5, produto3, 2)); // 2 Pasteis
         comanda5.getItens().add(new ItemComanda(null, comanda5, produto5, 1)); // 1 Cerveja
+
+        // Comandas com status "ABERTO"
+        Comanda comanda6 = new Comanda(null, Prioridade.BAIXA, Status.ABERTO, "Comanda 06", "Sem gelo", cliente2, funcionario3, "Mesa 06");
+        comanda6.setDataAbertura(LocalDate.now().minusWeeks(1));  // Comanda de 1 semana atrás
+        comanda6.getItens().add(new ItemComanda(null, comanda6, produto4, 3)); // 3 Sucos
+
+        Comanda comanda7 = new Comanda(null, Prioridade.MEDIA, Status.ABERTO, "Comanda 07", "Bem passado", cliente3, funcionario1, "Mesa 07");
+        comanda7.setDataAbertura(LocalDate.now().minusDays(3));  // Comanda de 3 dias atrás
+        comanda7.getItens().add(new ItemComanda(null, comanda7, produto1, 1)); // 1 Hamburguer
 
         // Criando mais comandas para popular os gráficos
         for (int i = 1; i <= 50; i++) {
             Cliente cliente = i % 2 == 0 ? cliente1 : cliente2;
             Funcionario funcionario = i % 3 == 0 ? funcionario1 : funcionario2;
             Prioridade prioridade = i % 2 == 0 ? Prioridade.ALTA : Prioridade.MEDIA;
-            Status status = i % 2 == 0 ? Status.ENCERRADO : Status.ANDAMENTO;
+            Status status = i % 3 == 0 ? Status.ABERTO : (i % 2 == 0 ? Status.ENCERRADO : Status.ANDAMENTO);
             LocalDate dataAbertura = LocalDate.now().minusMonths(i % 12);  // Diferentes meses dos últimos 12 meses
-            Comanda comanda = new Comanda(null, prioridade, status, "Comanda Extra " + i, "Observação " + i, cliente, funcionario);
+            Comanda comanda = new Comanda(null, prioridade, status, "Comanda Extra " + i, "Observação " + i, cliente, funcionario, "Mesa " + i);
             comanda.setDataAbertura(dataAbertura);
             comanda.getItens().add(new ItemComanda(null, comanda, produto2, 2)); // 2 Pizzas
             comanda.getItens().add(new ItemComanda(null, comanda, produto4, 1)); // 1 Suco
@@ -116,6 +124,6 @@ public class DBService {
         }
 
         // Salvando todas as entidades no repositório
-        comandaRepository.saveAll(Arrays.asList(comanda1, comanda2, comanda3, comanda4, comanda5));
+        comandaRepository.saveAll(Arrays.asList(comanda1, comanda2, comanda3, comanda4, comanda5, comanda6, comanda7));
     }
 }

@@ -1,6 +1,7 @@
 package com.gabriel.smarorder.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,8 +43,10 @@ public class ComandaService {
     }
 
     public Comanda create(@Valid ComandaDTO comandaDTO) {
-        Comanda comanda = comandaRepository.save(newComanda(comandaDTO));
-        notifyKitchen(comanda);  // Notifica a cozinha via WebSocket
+        Comanda comanda = newComanda(comandaDTO);
+        comanda.setDataAtualizacao(LocalDateTime.now());
+        comanda = comandaRepository.save(comanda);
+        notifyKitchen(comanda);
         return comanda;
     }
 
@@ -51,8 +54,9 @@ public class ComandaService {
         comandaDTO.setId(id);
         Comanda oldObj = findById(id);
         oldObj = newComanda(comandaDTO);
+        oldObj.setDataAtualizacao(LocalDateTime.now());
         comandaRepository.save(oldObj);
-        notifyKitchen(oldObj);  // Notifica a cozinha sobre a atualização
+        notifyKitchen(oldObj);
         return oldObj;
     }
 
@@ -73,11 +77,17 @@ public class ComandaService {
         comanda.setStatus(Status.toEnum(obj.getStatus()));
         comanda.setTitulo(obj.getTitulo());
         comanda.setObservacoes(obj.getObservacoes());
+        comanda.setMesa(obj.getMesa());  // Adiciona a mesa à comanda
         return comanda;
     }
 
     private void notifyKitchen(Comanda comanda) {
         // Envia a comanda via WebSocket para o canal específico
         messagingTemplate.convertAndSend("/topic/comandas", comanda);
+    }
+
+    public List<ComandaDTO> findComandasAtualizadas(LocalDateTime lastUpdateTime) {
+        List<Comanda> comandas = comandaRepository.findByDataAtualizacaoAfter(lastUpdateTime);
+        return comandas.stream().map(ComandaDTO::new).toList();
     }
 }
