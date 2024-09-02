@@ -43,12 +43,16 @@ public class ComandaService {
     }
 
     public Comanda create(@Valid ComandaDTO comandaDTO) {
+        // Log para verificar os dados recebidos
+        System.out.println("Recebido ComandaDTO: " + comandaDTO);
+
         Comanda comanda = newComanda(comandaDTO);
         comanda.setDataAtualizacao(LocalDateTime.now());
         comanda = comandaRepository.save(comanda);
         notifyKitchen(comanda);
         return comanda;
     }
+
 
     public Comanda update(Integer id, ComandaDTO comandaDTO) {
         comandaDTO.setId(id);
@@ -78,6 +82,8 @@ public class ComandaService {
         comanda.setTitulo(obj.getTitulo());
         comanda.setObservacoes(obj.getObservacoes());
         comanda.setMesa(obj.getMesa());  // Adiciona a mesa à comanda
+
+        System.out.println("Recebido ComandaDTO: " + obj);
         return comanda;
     }
 

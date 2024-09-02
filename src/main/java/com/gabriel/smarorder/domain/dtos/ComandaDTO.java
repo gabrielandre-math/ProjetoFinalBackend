@@ -61,8 +61,14 @@ public class ComandaDTO implements Serializable {
         this.funcionario = obj.getFuncionario().getId();
         this.nomeFuncionario = obj.getFuncionario().getNome();
         this.nomeCliente = obj.getCliente().getNome();
-        this.produtoId = obj.getItens().get(0).getProduto().getId(); // Assume que cada comanda tem pelo menos um item
+
+        if (obj.getItens() != null && !obj.getItens().isEmpty()) {
+            this.produtoId = obj.getItens().get(0).getProduto().getId();
+        } else {
+            this.produtoId = null;
+        }
     }
+
 
     // Getters e Setters
 

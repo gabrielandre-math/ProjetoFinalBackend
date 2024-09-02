@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,13 +32,17 @@ public class ProdutoResource {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> create(@RequestBody Produto obj) {
+    public ResponseEntity<Produto> create(@Valid @RequestBody Produto obj) {
         Produto newObj = produtoService.create(obj);
-        return ResponseEntity.ok().body(newObj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(newObj.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(newObj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody Produto obj) {
+    public ResponseEntity<Produto> update(@PathVariable Integer id, @Valid @RequestBody Produto obj) {
         Produto newObj = produtoService.update(id, obj);
         return ResponseEntity.ok().body(newObj);
     }
@@ -51,10 +58,8 @@ public class ProdutoResource {
         Produto produto = produtoService.findById(id);
         byte[] imagem = produto.getImagem();
         if (imagem == null || imagem.length == 0) {
-            return ResponseEntity.notFound().build(); // Retorna 404 se a imagem não for encontrada
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imagem);
     }
-
-
 }

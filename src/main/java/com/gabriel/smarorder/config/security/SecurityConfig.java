@@ -54,7 +54,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/check-email").permitAll()
                         .requestMatchers("/api/produtos/**").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/comandas/**").hasAnyRole("ADMIN", "FUNCIONARIO") // Permitir PATCH para ADMIN e FUNCIONARIO
+                        .requestMatchers("/funcionarios/**").hasAnyRole("ADMIN", "FUNCIONARIO") // Exemplo para funcionários
                         .requestMatchers("/comandas/**").hasAnyRole("ADMIN", "FUNCIONARIO")
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
