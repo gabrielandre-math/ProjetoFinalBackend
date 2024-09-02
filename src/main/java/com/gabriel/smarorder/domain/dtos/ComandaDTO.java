@@ -12,6 +12,7 @@ public class ComandaDTO implements Serializable {
 
     private Integer id;
     private byte[] imagem;
+    private Integer produtoId; // Adiciona o ID do produto
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataAbertura = LocalDate.now();
@@ -59,10 +60,19 @@ public class ComandaDTO implements Serializable {
         this.cliente = obj.getCliente().getId();
         this.funcionario = obj.getFuncionario().getId();
         this.nomeFuncionario = obj.getFuncionario().getNome();
-        this.nomeCliente = obj.getCliente().getNome();  // Aqui o nome do cliente é atribuído
+        this.nomeCliente = obj.getCliente().getNome();
+        this.produtoId = obj.getItens().get(0).getProduto().getId(); // Assume que cada comanda tem pelo menos um item
     }
 
     // Getters e Setters
+
+    public Integer getProdutoId() {
+        return produtoId;
+    }
+
+    public void setProdutoId(Integer produtoId) {
+        this.produtoId = produtoId;
+    }
 
     public Integer getId() {
         return id;

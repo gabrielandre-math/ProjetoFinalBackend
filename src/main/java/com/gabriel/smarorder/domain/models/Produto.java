@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 import java.math.BigDecimal;
 
@@ -18,14 +19,18 @@ public class Produto {
     private BigDecimal preco;
     private String descricao;
 
+    @Lob
+    private byte[] imagem; // Campo para armazenar a imagem
+
     public Produto() {
     }
 
-    public Produto(Integer id, String nome, BigDecimal preco, String descricao) {
+    public Produto(Integer id, String nome, BigDecimal preco, String descricao, byte[] imagem) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.descricao = descricao;
+        this.imagem = imagem;
     }
 
     // Getters e Setters
@@ -59,5 +64,13 @@ public class Produto {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 }

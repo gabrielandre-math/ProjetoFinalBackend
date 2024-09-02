@@ -43,5 +43,6 @@ public class ProdutoService {
         newObj.setNome(obj.getNome());
         newObj.setPreco(obj.getPreco());
         newObj.setDescricao(obj.getDescricao());
+        newObj.setImagem(obj.getImagem());
     }
 }

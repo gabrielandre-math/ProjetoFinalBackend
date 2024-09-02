@@ -3,13 +3,14 @@ package com.gabriel.smarorder.resources;
 import com.gabriel.smarorder.domain.models.Produto;
 import com.gabriel.smarorder.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/produtos")
+@RequestMapping(value = "/api/produtos")
 public class ProdutoResource {
 
     @Autowired
@@ -44,4 +45,16 @@ public class ProdutoResource {
         produtoService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/{id}/imagem", produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable Integer id) {
+        Produto produto = produtoService.findById(id);
+        byte[] imagem = produto.getImagem();
+        if (imagem == null || imagem.length == 0) {
+            return ResponseEntity.notFound().build(); // Retorna 404 se a imagem não for encontrada
+        }
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imagem);
+    }
+
+
 }

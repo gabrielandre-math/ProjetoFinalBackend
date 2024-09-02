@@ -20,6 +20,7 @@ public class AnalyticsService {
         analytics.put("totalComandas", comandaRepository.count());
         analytics.put("comandasEmAndamento", comandaRepository.countByStatus(Status.ANDAMENTO));
         analytics.put("comandasEncerradas", comandaRepository.countByStatus(Status.ENCERRADO));
+        analytics.put("comandasAbertas", comandaRepository.countByStatus(Status.ABERTO));
         return analytics;
     }
 
@@ -56,3 +57,4 @@ public class AnalyticsService {
         return priorityData;
     }
 }
+

@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -36,21 +39,26 @@ public class DBService {
 
     public void instanciaDB() {
 
-        // Criando produtos
-        Produto produto1 = new Produto(null, "Hamburguer", new BigDecimal("15.00"), "Hamburguer artesanal com queijo");
-        Produto produto2 = new Produto(null, "Pizza", new BigDecimal("25.00"), "Pizza de calabresa com borda recheada");
-        Produto produto3 = new Produto(null, "Pastel", new BigDecimal("8.00"), "Pastel de carne com queijo");
-        Produto produto4 = new Produto(null, "Suco", new BigDecimal("5.00"), "Suco de laranja natural");
-        Produto produto5 = new Produto(null, "Cerveja", new BigDecimal("7.00"), "Cerveja artesanal");
+        // Exemplo de como carregar imagens (ajustar conforme necessário)
+        byte[] imagemProduto1 = loadImage("src/main/resources/templates/imageburguer1.png");
+        byte[] imagemProduto2 = loadImage("src/main/resources/templates/imagefrango3.png");
+        byte[] imagemProduto3 = loadImage("src/main/resources/templates/imagemexido4.png");
+        byte[] imagemProduto4 = loadImage("src/main/resources/templates/imagesalada2.png");
+        byte[] imagemProduto5 = loadImage("src/main/resources/templates/imagefrango3.png");
 
-        // Salvando os produtos no repositório
+        Produto produto1 = new Produto(null, "Hamburguer", new BigDecimal("15.00"), "Hamburguer artesanal com queijo", imagemProduto1);
+        Produto produto2 = new Produto(null, "Pizza", new BigDecimal("25.00"), "Pizza de calabresa com borda recheada", imagemProduto2);
+        Produto produto3 = new Produto(null, "Pastel", new BigDecimal("8.00"), "Pastel de carne com queijo", imagemProduto3);
+        Produto produto4 = new Produto(null, "Suco", new BigDecimal("5.00"), "Suco de laranja natural", imagemProduto4);
+        Produto produto5 = new Produto(null, "Cerveja", new BigDecimal("7.00"), "Cerveja artesanal", imagemProduto5);
+
         produtoRepository.saveAll(Arrays.asList(produto1, produto2, produto3, produto4, produto5));
 
         // Criando Clientes com CPFs válidos (com comandas em aberto)
-        Cliente cliente1 = new Cliente(null, "Pablo Andrade", "227.722.590-80", "pablo1@mail.com", encoder.encode("1234567"), "99992999");
-        Cliente cliente2 = new Cliente(null, "Ana Beatriz", "195.951.350-89", "anin@mail.com",encoder.encode("654321"), "98887766");
-        Cliente cliente3 = new Cliente(null, "Carlos Souza", "926.519.560-66", "carlos@mail.com", encoder.encode("senha123"), "97776555");
-        Cliente cliente4 = new Cliente(null, "Mariana Lima", "554.602.500-05", "mariana@mail.com", encoder.encode("senha456"), "98888888");
+        Cliente cliente1 = new Cliente(null, "Pablo Andrade", "702.040.790-04", "pablo1@mail.com", encoder.encode("1234567"), "99992999");
+        Cliente cliente2 = new Cliente(null, "Ana Beatriz", "192.853.000-14", "anin@mail.com",encoder.encode("654321"), "98887766");
+        Cliente cliente3 = new Cliente(null, "Carlos Souza", "171.237.940-28", "carlos@mail.com", encoder.encode("senha123"), "97776555");
+        Cliente cliente4 = new Cliente(null, "Mariana Lima", "114.593.410-23", "mariana@mail.com", encoder.encode("senha456"), "98888888");
 
         clienteRepository.saveAll(Arrays.asList(cliente1, cliente2, cliente3, cliente4));
 
@@ -60,9 +68,9 @@ public class DBService {
         cliente4.addPerfil(Perfil.CLIENTE);
 
         // Criando Funcionários com CPFs válidos
-        Funcionario funcionario1 = new Funcionario(null, "Adalmir Jr", "900.650.710-50", "adalmir@mail.com", encoder.encode("1234563"), "99992919");
-        Funcionario funcionario2 = new Funcionario(null, "Maria Silva", "327.396.860-56", "maria@mail.com", encoder.encode("456789"), "98888777");
-        Funcionario funcionario3 = new Funcionario(null, "João Mendes", "527.039.530-46", "joao@mail.com", encoder.encode("123456"), "96665544");
+        Funcionario funcionario1 = new Funcionario(null, "Adalmir Jr", "226.809.720-07", "adalmir@mail.com", encoder.encode("1234563"), "99992919");
+        Funcionario funcionario2 = new Funcionario(null, "Maria Silva", "810.787.230-44", "maria@mail.com", encoder.encode("456789"), "98888777");
+        Funcionario funcionario3 = new Funcionario(null, "João Mendes", "847.494.200-42", "joao@mail.com", encoder.encode("123456"), "96665544");
 
         funcionario1.addPerfil(Perfil.FUNCIONARIO);
         funcionario2.addPerfil(Perfil.FUNCIONARIO);
@@ -71,7 +79,7 @@ public class DBService {
         funcionarioRepository.saveAll(Arrays.asList(funcionario1, funcionario2, funcionario3));
 
         // Admin
-        Funcionario funcionarioAdm = new Funcionario(null, "admin", "844.165.670-30", "admin@mail.com", encoder.encode("admin123"), "99992919");
+        Funcionario funcionarioAdm = new Funcionario(null, "admin", "416.930.370-92", "admin@mail.com", encoder.encode("admin123"), "99992919");
         funcionarioAdm.addPerfil(Perfil.ADMIN);
 
         funcionarioRepository.save(funcionarioAdm);
@@ -126,4 +134,13 @@ public class DBService {
         // Salvando todas as entidades no repositório
         comandaRepository.saveAll(Arrays.asList(comanda1, comanda2, comanda3, comanda4, comanda5, comanda6, comanda7));
     }
+
+    private byte[] loadImage(String path) {
+        try {
+            return Files.readAllBytes(Paths.get(path));
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao carregar a imagem", e);
+        }
+    }
+
 }
