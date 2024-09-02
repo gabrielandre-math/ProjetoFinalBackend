@@ -90,4 +90,13 @@ public class ComandaService {
         List<Comanda> comandas = comandaRepository.findByDataAtualizacaoAfter(lastUpdateTime);
         return comandas.stream().map(ComandaDTO::new).toList();
     }
+
+    public Comanda updateStatus(Integer id, Integer novoStatus) {
+        Comanda comanda = findById(id);
+        comanda.setStatus(Status.toEnum(novoStatus));
+        comanda.setDataAtualizacao(LocalDateTime.now());
+        comandaRepository.save(comanda);
+        return comanda;
+    }
+
 }

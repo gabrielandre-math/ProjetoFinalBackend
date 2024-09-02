@@ -59,4 +59,12 @@ public class ComandaResource {
         List<ComandaDTO> comandas = comandaService.findComandasAtualizadas(lastUpdateTime.orElse(LocalDateTime.MIN));
         return ResponseEntity.ok().body(comandas);
     }
+    @PreAuthorize("hasAnyRole('ADMIN','FUNCIONARIO')")
+    @PatchMapping(value = "/{id}/status")
+    public ResponseEntity<ComandaDTO> updateStatus(@PathVariable Integer id, @RequestBody Integer novoStatus) {
+        Comanda updatedComanda = comandaService.updateStatus(id, novoStatus);
+        return ResponseEntity.ok().body(new ComandaDTO(updatedComanda));
+    }
+
+
 }

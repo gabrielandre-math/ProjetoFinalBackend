@@ -50,9 +50,10 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
-                        .requestMatchers("/api/analytics/**").permitAll()  // Permite acesso público à rota /api/analytics
+                        .requestMatchers("/api/analytics/**").permitAll()
                         .requestMatchers("/api/check-email").permitAll()
                         .requestMatchers("/api/produtos/**").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/comandas/**").hasAnyRole("ADMIN", "FUNCIONARIO") // Permitir PATCH para ADMIN e FUNCIONARIO
                         .requestMatchers("/comandas/**").hasAnyRole("ADMIN", "FUNCIONARIO")
                         .anyRequest().authenticated()
                 )
@@ -71,8 +72,13 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
