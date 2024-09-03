@@ -264,5 +264,24 @@ Retorna a imagem de um produto específico.
 Algumas rotas exigem autenticação e autorização baseadas em roles (`ADMIN`, `FUNCIONARIO`). Isso é gerenciado usando anotações do Spring Security, como `@PreAuthorize`.
 
 ---
+## Responsável pelo Projeto
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#" title="contribuidor">
+        <img src="https://avatars.githubusercontent.com/u/60861872?s=400&u=49b2e6b1034e45f02529c6e165c41de8300ed350&v=4" width="100px;" alt="Foto do Gabriel"/><br>
+        <sub>
+          <b>Gabriel André</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+## Contribuição
+
+Para mais informações, entre em contato com: gabriel.alsilva@ufn.edu.br
+
 
 Este README oferece uma visão geral das principais rotas da API. Para mais detalhes, como exemplos de payloads ou respostas, consulte a documentação específica ou o código-fonte.
