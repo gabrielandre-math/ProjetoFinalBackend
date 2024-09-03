@@ -283,5 +283,4 @@ Algumas rotas exigem autenticação e autorização baseadas em roles (`ADMIN`, 
 
 Para mais informações, entre em contato com: gabriel.alsilva@ufn.edu.br
 
-
 Este README oferece uma visão geral das principais rotas da API. Para mais detalhes, como exemplos de payloads ou respostas, consulte a documentação específica ou o código-fonte.
