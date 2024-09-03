@@ -52,6 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
                         .requestMatchers("/api/analytics/**").permitAll()
                         .requestMatchers("/api/check-email").permitAll()
+                        .requestMatchers("/api/check-cpf").permitAll()
                         .requestMatchers("/api/produtos/**").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/comandas/**").hasAnyRole("ADMIN", "FUNCIONARIO") // Permitir PATCH para ADMIN e FUNCIONARIO
                         .requestMatchers("/funcionarios/**").hasAnyRole("ADMIN", "FUNCIONARIO") // Exemplo para funcionários
